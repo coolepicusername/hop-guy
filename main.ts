@@ -21,8 +21,8 @@ let guy = sprites.create(img`
 scene.cameraFollowSprite(guy)
 controller.moveSprite(guy,50,0)
 
-guy.x = 16 * 4
-guy.y = 16 * 63
+guy.x = 16 * 8
+guy.y = 16 * 30
 //tilemap
 
 tiles.setTilemap(tilemap`level1`)
@@ -33,6 +33,8 @@ let jumpTime = 0
 let direction = 0
 let vx = 0
 game.onUpdate(function(){
+   
+
 
 guy.vy += 8
 
@@ -235,23 +237,49 @@ controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
     game.reset()
 }) 
 
-scene.onOverlapTile(SpriteKind.Player, img`
+
+let tileCheck = sprites.create(img`
     5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
+    5 . . . . . . . . . . . . . . 5
     5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-`, function(sprite: Sprite, location: tiles.Location) {
-  game.winEffect 
+`,SpriteKind.Player)
+tileCheck.setFlag(SpriteFlag.Ghost,true)
+
+game.onUpdate(function() {
+    tileCheck.y = Math.floor(guy.y + 14)
+    tileCheck.x = Math.floor(guy.x)
+if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+   `)) {
+      guy.vy *= -1
+   }
+
 })
