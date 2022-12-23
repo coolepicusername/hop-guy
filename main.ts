@@ -21,8 +21,8 @@ let guy = sprites.create(img`
 scene.cameraFollowSprite(guy)
 controller.moveSprite(guy,50,0)
 
-guy.x = 16 * 8
-guy.y = 16 * 30
+guy.x = 16 * 4
+guy.y = 16 * 63
 //tilemap
 
 tiles.setTilemap(tilemap`level1`)
@@ -85,10 +85,17 @@ if (Math.abs(direction) < 70) {
 }
 
 
-    info.setScore(guy.vy)
+    
 
 })
 
+game.onUpdateInterval(1,function() {
+  info.setScore(time)
+    time += 0.01
+})
+
+info.setScore(1000)
+let time = 0
 controller.down.onEvent(ControllerButtonEvent.Released,function() {
 jump()
      
@@ -239,27 +246,27 @@ controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
 
 
 let tileCheck = sprites.create(img`
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 . . . . . . . . . . . . . . 5
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
 `,SpriteKind.Player)
 tileCheck.setFlag(SpriteFlag.Ghost,true)
 
 game.onUpdate(function() {
-    tileCheck.y = Math.floor(guy.y + 14)
+    tileCheck.y = Math.floor(guy.y + 3)
     tileCheck.x = Math.floor(guy.x)
 if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
@@ -281,5 +288,24 @@ if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
    `)) {
       guy.vy *= -1
    }
-
+    if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+        5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+    `)) {    
+    game.over(true)
+    }
 })
