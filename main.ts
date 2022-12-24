@@ -1122,10 +1122,10 @@ if (jumpTime > 30){
 }
 if (Math.abs(direction) < 70) {
    if (controller.left.isPressed()) {
-        direction += 3
+        direction -= 3
     }
     if (controller.right.isPressed()) {
-        direction -= 3
+        direction += 3
     }  
 }
    
@@ -1151,29 +1151,30 @@ jump()
 
 function jump() {
     guy.setImage(img`
-        . . . . . f f f f f . . . . . .
-        . . . . f f f f . . f . . . . .
-        . . . . f f f f 1 f f . . . . .
-        . . . . f f f f 1 1 f . . . . .
-        . . . . f f f . . . f . . . . .
-        . . . . f f f . . f f . . . . .
-        . . . . . f f f f f . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . . 2 2 2 2 2 . . . . . .
-        . . . . 2 2 2 2 2 2 . . . . . .
-        . . . . 2 2 2 2 2 2 . . . . . .
-        . . . . 2 2 2 2 2 2 . . . . . .
-        . . . . 2 2 2 2 2 2 . . . . . .
-        . . . . 2 2 2 2 2 2 . . . . . .
+        . . . . . f f f f f f f . . . .
+        . . . . f f f f f f f f f . . .
+        . . . . f f f f f f f f f . . .
+        . . . f f f d 1 f d 1 f . . . .
+        . . . f f d d 1 1 d 1 1 . . . .
+        . . . f f f d d d d d d . . . .
+        . . . . . f 2 d d d d . . . . .
+        . . . . f 2 2 2 2 2 2 f . . . .
+        . . . f 2 2 f 2 2 2 2 f f . . .
+        . . . f 2 f d f 2 2 2 f d f . .
+        . . . . f d d f 2 2 f f d f . .
+        . . . . . f f f f f f f f . . .
+        . . . . f 8 8 8 8 8 8 f . . . .
+        . . . f f 8 8 8 8 8 8 f . . . .
+        . . f f 8 8 8 f f 8 8 f . . . .
+        . . f 2 2 2 f f 2 2 2 f . . . .
+        . f 2 1 2 f f 2 1 2 f . . . . .
+        . f 2 2 f . f 2 2 f . . . . . .
     `)
+    guy.y -= 2
   if (jumpTime > 0)
     guy.vy = -jumpTime * jumpHeight
     jumpTime = 0
-
+    
 
 if (direction > 0) {
     guy.vx = direction
@@ -1358,4 +1359,158 @@ if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
     `)) {    
     game.over(true)
     }
+})
+
+
+//animation
+
+let facing = 0
+
+game.onUpdate(function() {
+  if (controller.right.isPressed()) {
+      facing = 1
+  }
+  if (controller.left.isPressed()) {
+      facing = -1
+  }
+    if (guy.vx > 0) {
+        facing = 1
+    }
+    if (guy.vx < 0) {
+        facing = -1
+    }
+  info.setScore(facing)
+  
+  
+   if (guy.isHittingTile(CollisionDirection.Bottom)) {
+      
+       if (!controller.down.isPressed()){
+           if (facing > 0) {
+               guy.setImage(img`
+                   . . . . f f f f f f f . . . . .
+                   . . . f f f f f f f f . . . . .
+                   . . f f f f f f d f f . . . . .
+                   . . f f f f d 1 1 d 1 . . . . .
+                   . . . f f d d 1 f d f . . . . .
+                   . . . . f f d d d d d . . . . .
+                   . . . . . f d d d d d . . . . .
+                   . . . . f f 2 2 2 2 f . . . . .
+                   . . . f f 2 2 2 2 2 2 f . . . .
+                   . . f f 2 2 f 2 2 2 2 2 f . . .
+                   . . f d d f 2 2 2 2 f d d f . .
+                   . . f f f f f f f f f f f . . .
+                   . . . . f 8 8 8 8 8 8 f . . . .
+                   . . . f f 8 8 f f 8 8 f f . . .
+                   . . f 1 1 2 f . . f 2 1 1 f . .
+                   . f 2 2 2 1 f . . f 1 2 2 2 f .
+               `)
+           }
+           if (facing < 0) {
+               guy.setImage(img`
+                   . . . . . f f f f f f f . . . .
+                   . . . . . f f f f f f f f . . .
+                   . . . . . f f d f f f f f f . .
+                   . . . . . 1 d 1 1 d f f f f . .
+                   . . . . . f d f 1 d d f f . . .
+                   . . . . . d d d d d f f . . . .
+                   . . . . . d d d d d f . . . . .
+                   . . . . . f 2 2 2 2 f f . . . .
+                   . . . . f 2 2 2 2 2 2 f f . . .
+                   . . . f 2 2 2 2 2 f 2 2 f f . .
+                   . . f d d f 2 2 2 2 f d d f . .
+                   . . . f f f f f f f f f f f . .
+                   . . . . f 8 8 8 8 8 8 f . . . .
+                   . . . f f 8 8 f f 8 8 f f . . .
+                   . . f 1 1 2 f . . f 2 1 1 f . .
+                   . f 2 2 2 1 f . . f 1 2 2 2 f .
+               `)
+           }
+       }
+   } else {
+       if (!controller.down.isPressed()) {
+           if (facing > 0) {
+              if (guy.vy > 0) {
+          guy.setImage(img`
+              . . f f f f f f f f f . . . . .
+              . f f f f d f f f f f . . . . .
+              . f f f d d d d d d d . . . . .
+              . . f d d d d 1 1 d 1 . . f f f
+              f f . f d d d 1 f d f . f d d f
+              d d f f f d d d d d d f 2 d d f
+              d d 2 2 f f f f f f f 2 2 2 f f
+              f 2 2 2 2 2 2 2 2 2 2 2 2 f f .
+              . f f 2 2 2 2 2 2 2 2 f f f . .
+              . . f f 2 2 2 2 2 2 2 f 8 8 f .
+              . . . f f f f f f f f 8 8 8 f .
+              . . . f 8 8 8 8 8 8 8 8 f 8 f .
+              . . . f 8 8 8 8 f 8 8 f f 2 2 f
+              . . . f 8 8 8 f . f f f f 2 2 f
+              . . . f 2 2 f . . . . . f 1 1 f
+              . . . . . 2 f . . . . . f 2 f .
+          `) 
+           }else {
+                  guy.setImage(img`
+                      . . . . . f f f f f f f . . . .
+                      . . . . f f f f f f f f f . . .
+                      . . . . f f f f f f f f f . . .
+                      . . . f f f d 1 f d 1 f . . . .
+                      . . . f f d d 1 1 d 1 1 . . . .
+                      . . . f f f d d d d d d . . . .
+                      . . . . . f 2 d d d d . . . . .
+                      . . . . f 2 2 2 2 2 2 f . . . .
+                      . . . f 2 2 f 2 2 2 2 f f . . .
+                      . . . f 2 f d f 2 2 2 f d f . .
+                      . . . . f d d f 2 2 f f d f . .
+                      . . . . . f f f f f f f f . . .
+                      . . . . f 8 8 8 8 8 8 f . . . .
+                      . . . f f 8 8 8 8 8 8 f . . . .
+                      . . f f 8 8 8 f f 8 8 f . . . .
+                      . . f 2 2 2 f f 2 2 2 f . . . .
+                  `)
+           }
+              
+           }
+           if (facing < 0) {
+               if (guy.vy > 0) {
+                   guy.setImage(img`
+                       . . . . . f f f f f f f f f . .
+                       . . . . . f f f f f d f f f f .
+                       . . . . . d d d d d d d f f f .
+                       f f f . . 1 d 1 1 d d d d f . .
+                       f d d f . f d f 1 d d d f . f f
+                       f d d 2 f d d d d d d f f f d d
+                       f f 2 2 2 f f f f f f f 2 2 d d
+                       . f f 2 2 2 2 2 2 2 2 2 2 2 2 f
+                       . . f f f 2 2 2 2 2 2 2 2 f f .
+                       . f 8 8 f 2 2 2 2 2 2 2 f f . .
+                       . f 8 8 8 f f f f f f f f . . .
+                       . f 8 f 8 8 8 8 8 8 8 8 f . . .
+                       f 2 2 f f 8 8 f 8 8 8 8 f . . .
+                       f 2 2 f f f f . f 8 8 8 f . . .
+                       f 1 1 f . . . . . f 2 2 f . . .
+                       . f 2 f . . . . . f 2 2 . . . .
+                   `)
+               } else {
+                   guy.setImage(img`
+                       . . . . f f f f f f f . . . . .
+                       . . . f f f f f f f f f . . . .
+                       . . . f f f f f f f f f . . . .
+                       . . . . f 1 d f 1 d f f f . . .
+                       . . . . 1 1 d 1 1 d d f f . . .
+                       . . . . d d d d d d f f f . . .
+                       . . . . . d d d d 2 f . . . . .
+                       . . . . f 2 2 2 2 2 2 f . . . .
+                       . . . f f 2 2 2 2 f 2 2 f . . .
+                       . . f d f 2 2 2 f d f 2 f . . .
+                       . . f d f f 2 2 f d d f . . . .
+                       . . . f f f f f f f f . . . . .
+                       . . . . f 8 8 8 8 8 8 f . . . .
+                       . . . . f 8 8 8 8 8 8 f f . . .
+                       . . . . f 8 8 f f 8 8 8 f f . .
+                       . . . . f 2 2 2 f f 2 2 2 f . .
+                   `)
+               }
+           }
+       }
+   }
 })
