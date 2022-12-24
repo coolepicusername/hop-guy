@@ -1,9 +1,11 @@
 {
-    "name": "hop guy",
+    "name": "hop guy ",
     "description": "",
     "dependencies": {
         "device": "*",
-        "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.0.1"
+        "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.0.1",
+        "arcade-background-scroll": "github:microsoft/arcade-background-scroll#6cfbf925b9a4d5ddf3e1078e6cf6ca6a1aebb301",
+        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1"
     },
     "files": [
         "main.blocks",
