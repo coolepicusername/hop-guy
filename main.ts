@@ -14,9 +14,9 @@ let guy = sprites.create(img`
     . . f d d f 2 2 2 2 f d d f . .
     . . f f f f f f f f f f f . . .
     . . . . f 8 8 8 8 8 8 f . . . .
-    . . . f f 8 8 f f 8 8 f f . . .
-    . . f 1 1 2 f . . f 2 1 1 f . .
-    . f 2 2 2 1 f . . f 1 2 2 2 f .
+    . . . . f 8 8 f f 8 8 f . . . .
+    . . . f 1 2 f . . f 2 1 f . . .
+    . . f 2 2 1 f . . f 1 2 2 f . .
 `, SpriteKind.Player)
 scene.cameraFollowSprite(guy)
 controller.moveSprite(guy,50,0)
@@ -1129,6 +1129,7 @@ if (Math.abs(direction) < 70) {
     }  
 }
    
+   
     }
 }
 
@@ -1150,31 +1151,11 @@ jump()
 })
 
 function jump() {
-    guy.setImage(img`
-        . . . . . f f f f f f f . . . .
-        . . . . f f f f f f f f f . . .
-        . . . . f f f f f f f f f . . .
-        . . . f f f d 1 f d 1 f . . . .
-        . . . f f d d 1 1 d 1 1 . . . .
-        . . . f f f d d d d d d . . . .
-        . . . . . f 2 d d d d . . . . .
-        . . . . f 2 2 2 2 2 2 f . . . .
-        . . . f 2 2 f 2 2 2 2 f f . . .
-        . . . f 2 f d f 2 2 2 f d f . .
-        . . . . f d d f 2 2 f f d f . .
-        . . . . . f f f f f f f f . . .
-        . . . . f 8 8 8 8 8 8 f . . . .
-        . . . f f 8 8 8 8 8 8 f . . . .
-        . . f f 8 8 8 f f 8 8 f . . . .
-        . . f 2 2 2 f f 2 2 2 f . . . .
-        . f 2 1 2 f f 2 1 2 f . . . . .
-        . f 2 2 f . f 2 2 f . . . . . .
-    `)
-    guy.y -= 2
-  if (jumpTime > 0)
+
+    if (jumpTime > 0)
     guy.vy = -jumpTime * jumpHeight
     jumpTime = 0
-    
+    guy.y -= 2
 
 if (direction > 0) {
     guy.vx = direction
@@ -1184,7 +1165,8 @@ if (direction < 0) {
 }
 
 direction = 0
-
+music.playTone(Note.C4,100)
+music.playTone(Note.E4, 100)
 }
 
 scene.onHitWall(SpriteKind.Player, function(sprite: Sprite, location: tiles.Location) {
@@ -1320,23 +1302,23 @@ game.onUpdate(function() {
     tileCheck.y = Math.floor(guy.y + 3)
     tileCheck.x = Math.floor(guy.x)
 if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-       7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-   `)) {
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`)) {
       guy.vy *= -1
    }
     if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
@@ -1365,8 +1347,50 @@ if (tiles.tileAtLocationEquals(tileCheck.tilemapLocation(), img`
 //animation
 
 let facing = 0
+let guy_sprite = sprites.create(img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`,SpriteKind.Projectile)
+guy_sprite.setFlag(SpriteFlag.Ghost, true)
+guy.z -= 3
+
 
 game.onUpdate(function() {
+  guy_sprite.x = Math.floor(guy.x)
+guy_sprite.y = Math.floor(guy.y)
+ guy_sprite.setImage(img`
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+ `) 
+  
   if (controller.right.isPressed()) {
       facing = 1
   }
@@ -1400,9 +1424,9 @@ game.onUpdate(function() {
                    . . f d d f 2 2 2 2 f d d f . .
                    . . f f f f f f f f f f f . . .
                    . . . . f 8 8 8 8 8 8 f . . . .
-                   . . . f f 8 8 f f 8 8 f f . . .
-                   . . f 1 1 2 f . . f 2 1 1 f . .
-                   . f 2 2 2 1 f . . f 1 2 2 2 f .
+                   . . . . f 8 8 f f 8 8 f . . . .
+                   . . . f 1 2 f . . f 2 1 f . . .
+                   . . f 2 2 1 f . . f 1 2 2 f . .
                `)
            }
            if (facing < 0) {
@@ -1420,39 +1444,57 @@ game.onUpdate(function() {
                    . . f d d f 2 2 2 2 f d d f . .
                    . . . f f f f f f f f f f f . .
                    . . . . f 8 8 8 8 8 8 f . . . .
-                   . . . f f 8 8 f f 8 8 f f . . .
-                   . . f 1 1 2 f . . f 2 1 1 f . .
-                   . f 2 2 2 1 f . . f 1 2 2 2 f .
+                   . . . . f 8 8 f f 8 8 f . . . .
+                   . . . f 1 2 f . . f 2 1 f . . .
+                   . . f 2 2 1 f . . f 1 2 2 f . .
                `)
            }
        }
    } else {
-       if (!controller.down.isPressed()) {
+    
            if (facing > 0) {
               if (guy.vy > 0) {
-          guy.setImage(img`
-              . . f f f f f f f f f . . . . .
-              . f f f f d f f f f f . . . . .
-              . f f f d d d d d d d . . . . .
-              . . f d d d d 1 1 d 1 . . f f f
-              f f . f d d d 1 f d f . f d d f
-              d d f f f d d d d d d f 2 d d f
-              d d 2 2 f f f f f f f 2 2 2 f f
-              f 2 2 2 2 2 2 2 2 2 2 2 2 f f .
-              . f f 2 2 2 2 2 2 2 2 f f f . .
+          guy_sprite.setImage(img`
+              . . . . . f f f f f f f . . . .
+              . . . . f f f f f f f f . . . .
+              . . . f f f f f f d f f . . . .
+              . . . f f f f d 1 1 d 1 . f f f
+              f f . . f f f d 1 1 d 1 f d d f
+              d d f . . f d d 1 f d f 2 d d f
+              d d 2 f . f f d d d d d 2 2 f f
+              f 2 2 2 f f f d d d d d 2 f f .
+              . f f 2 2 2 f f f f f f f f . .
               . . f f 2 2 2 2 2 2 2 f 8 8 f .
               . . . f f f f f f f f 8 8 8 f .
               . . . f 8 8 8 8 8 8 8 8 f 8 f .
-              . . . f 8 8 8 8 f 8 8 f f 2 2 f
-              . . . f 8 8 8 f . f f f f 2 2 f
+              . . . f 8 8 f f f f f f f 2 2 f
               . . . f 2 2 f . . . . . f 1 1 f
-              . . . . . 2 f . . . . . f 2 f .
+              . . . f 1 1 f . . . . . f 2 2 f
+              . . . f 2 2 f . . . . . . . . .
           `) 
+          guy.setImage(img`
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+          `)
            }else {
-                  guy.setImage(img`
+                  guy_sprite.setImage(img`
                       . . . . . f f f f f f f . . . .
-                      . . . . f f f f f f f f f . . .
-                      . . . . f f f f f f f f f . . .
+                      . . . . f f f f f f f f . . . .
+                      . . . . f f f f f f f f . . . .
                       . . . f f f d 1 f d 1 f . . . .
                       . . . f f d d 1 1 d 1 1 . . . .
                       . . . f f f d d d d d d . . . .
@@ -1467,31 +1509,67 @@ game.onUpdate(function() {
                       . . f f 8 8 8 f f 8 8 f . . . .
                       . . f 2 2 2 f f 2 2 2 f . . . .
                   `)
+                  guy.setImage(img`
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+          `)
            }
               
            }
            if (facing < 0) {
                if (guy.vy > 0) {
-                   guy.setImage(img`
-                       . . . . . f f f f f f f f f . .
-                       . . . . . f f f f f d f f f f .
-                       . . . . . d d d d d d d f f f .
-                       f f f . . 1 d 1 1 d d d d f . .
-                       f d d f . f d f 1 d d d f . f f
-                       f d d 2 f d d d d d d f f f d d
-                       f f 2 2 2 f f f f f f f 2 2 d d
-                       . f f 2 2 2 2 2 2 2 2 2 2 2 2 f
-                       . . f f f 2 2 2 2 2 2 2 2 f f .
+                   guy_sprite.setImage(img`
+                       . . . . f f f f f f f . . . . .
+                       . . . . f f f f f f f f . . . .
+                       . . . . f f d f f f f f f . . .
+                       f f f . 1 d 1 1 d f f f f . . .
+                       f d d f 1 d 1 1 d f f f . . f f
+                       f d d 2 f d f 1 d d f . . f d d
+                       f f 2 2 d d d d d f f . f 2 d d
+                       . f f 2 d d d d d f f f 2 2 2 f
+                       . . f f f f f f f f 2 2 2 f f .
                        . f 8 8 f 2 2 2 2 2 2 2 f f . .
                        . f 8 8 8 f f f f f f f f . . .
                        . f 8 f 8 8 8 8 8 8 8 8 f . . .
-                       f 2 2 f f 8 8 f 8 8 8 8 f . . .
-                       f 2 2 f f f f . f 8 8 8 f . . .
+                       f 2 2 f f f f f f f 8 8 f . . .
                        f 1 1 f . . . . . f 2 2 f . . .
-                       . f 2 f . . . . . f 2 2 . . . .
+                       f 2 2 f . . . . . f 1 1 f . . .
+                       . . . . . . . . . f 2 2 f . . .
                    `)
-               } else {
                    guy.setImage(img`
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . . . . . . . . . . . . . . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+              . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+          `)
+               } else {
+                   guy_sprite.setImage(img`
                        . . . . f f f f f f f . . . . .
                        . . . f f f f f f f f f . . . .
                        . . . f f f f f f f f f . . . .
@@ -1509,8 +1587,26 @@ game.onUpdate(function() {
                        . . . . f 8 8 f f 8 8 8 f f . .
                        . . . . f 2 2 2 f f 2 2 2 f . .
                    `)
+                   guy.setImage(img`
+                       . . . . . . . . . . . . . . . .
+                       . . . . . . . . . . . . . . . .
+                       . . . . . . . . . . . . . . . .
+                       . . . . . . . . . . . . . . . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                       . . 8 8 8 8 8 8 8 8 8 8 8 8 . .
+                   `)
                }
            }
-       }
+       
    }
 })
