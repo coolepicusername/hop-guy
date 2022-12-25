@@ -20,8 +20,8 @@ let guy = sprites.create(img`
 `, SpriteKind.Player)
 scene.cameraFollowSprite(guy)
 controller.moveSprite(guy,50,0)
-guy.x = 16 * 4
-guy.y = 16 * 63
+guy.x = 16 * 2
+guy.y = 16 * 82
 scene.setBackgroundImage(img`
     5555555555555555555555555555555555544444455555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
     5555555555555555555555555555555555544444444555555552225555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
@@ -1273,9 +1273,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite: Sprite, 
 })
 
 
-controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
-    game.reset()
-}) 
+
 
 
 let tileCheck = sprites.create(img`
@@ -1366,7 +1364,7 @@ let guy_sprite = sprites.create(img`
     . . . . . . . . . . . . . . . .
 `,SpriteKind.Projectile)
 guy_sprite.setFlag(SpriteFlag.Ghost, true)
-guy.z -= 3
+guy_sprite.z += 3
 
 
 game.onUpdate(function() {
@@ -1610,3 +1608,92 @@ guy_sprite.y = Math.floor(guy.y)
        
    }
 })
+
+//tutorial
+let interaction = 0
+let aButton = sprites.create(img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`,SpriteKind.Player) 
+let guyPositionX = 0
+
+game.onUpdate(function() {
+ aButton.setImage(img`
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+     . . . . . . . . . . . . . . . .
+ `)
+guyPositionX = (Math.floor(guy.x / 16) * 16)
+  if (tiles.tileAtLocationEquals(guy.tilemapLocation(), img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . e e e e e e e 4 4 4 4 4 4 4 .
+    . e f e e f e e f e e e e e 4 .
+    . c f e f e f e f e e f e f 4 .
+    . c e e e e e e e e e f e f 4 .
+    . c f e e f e f e e f e e e 4 .
+    . c e f e e e e f e f e f e 4 .
+    . c e e e e f e e e e e f e 4 .
+    . c c c c c e e e e e e e e e .
+    . . . . . . . c e . . . . . . .
+    . . . . . . . c e . . . . . . .
+    . . . . . . . c e . . . . . . .
+    . . . . . . . c e . . . . . . .
+    . . . . . . . c e . . . . . . .
+    . . . . . . . c e . . . . . . .
+`)) {
+      aButton.setImage(img`
+          . 7 2 2 2 7 7 .
+          7 7 2 7 7 2 7 7
+          7 7 2 7 7 2 7 7
+          7 7 2 7 7 2 7 7
+          7 7 2 2 2 7 7 7
+          7 7 2 7 7 2 7 7
+          7 7 2 7 7 2 7 7
+          . 7 2 2 2 7 7 .
+      `)
+aButton.setPosition((Math.floor(guy.x/16) + 0.5) * 16,guy.y - 16)
+ 
+if (controller.B.isPressed()) {
+    if (guyPositionX = 4)  {
+game.splash(guyPositionX)
+
+   }
+if (guyPositionX = 6) {
+    game.splash(guyPositionX)
+
+}
+
+
+}
+}  
+
+})
+
