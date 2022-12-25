@@ -1051,6 +1051,11 @@ scene.setBackgroundImage(img`
     8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 `)
 scroller.setBackgroundScrollOffset(0, guy.y - 880)
+
+
+//tilemap
+
+tiles.setTilemap(tilemap`level1`)
 tiles.placeOnRandomTile(guy, img`
     . . . . . . . . . . . . . . . .
     . . . . d d d d d d d . . . . .
@@ -1069,11 +1074,6 @@ tiles.placeOnRandomTile(guy, img`
     . . d f c c c c c c c f d . . .
     . . d f c c c c c c c f d . . .
 `)
-
-//tilemap
-
-tiles.setTilemap(tilemap`level1`)
-
 //conditionals
 let jumpHeight = 7
 let jumpTime = 0
@@ -1632,6 +1632,8 @@ let aButton = sprites.create(img`
 let guyPositionX = 0
 
 game.onUpdate(function() {
+ info.setScore(guyPositionX)
+ 
  aButton.setImage(img`
      . . . . . . . . . . . . . . . .
      . . . . . . . . . . . . . . . .
@@ -1650,7 +1652,7 @@ game.onUpdate(function() {
      . . . . . . . . . . . . . . . .
      . . . . . . . . . . . . . . . .
  `)
-guyPositionX = (Math.floor(guy.x / 16) * 16)
+guyPositionX = (Math.floor(guy.x / 16))
   if (tiles.tileAtLocationEquals(guy.tilemapLocation(), img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -1682,14 +1684,21 @@ guyPositionX = (Math.floor(guy.x / 16) * 16)
 aButton.setPosition((Math.floor(guy.x/16) + 0.5) * 16,guy.y - 16)
  
 if (controller.B.isPressed()) {
-    if (guyPositionX = 4)  {
-game.splash(guyPositionX)
+  
+if (guyPositionX === 4)  {
+game.splash("hold down to charge jump")
 
    }
-if (guyPositionX = 6) {
-    game.splash(guyPositionX)
+    if (guyPositionX === 6) {
+        game.splash("use left/right while","charging to angle your jump")
 
-}
+    }
+    if (guyPositionX === 9)  {
+game.splash("There are no checkpoints","be carefull, and good luck")
+        guy.x = 16 * 4
+        guy.y = 16 * 62.5
+   }
+
 
 
 }
